@@ -1,34 +1,43 @@
+// import { useState } from 'react';
 import { initReactQueryAuth } from 'react-query-auth';
 
 import { Spinner } from '@/components/Elements';
 import {
-  loginWithEmailAndPassword,
+  logout,
+  loginWithUsernameAndPassword,
   getUser,
   registerWithEmailAndPassword,
-  UserResponse,
+  // UserResponse,
   LoginCredentialsDTO,
   RegisterCredentialsDTO,
-  AuthUser,
+  // AuthUser,
+  UserInfo,
+  LoginAPIResponse,
 } from '@/features/auth';
-import storage from '@/utils/storage';
 
-async function handleUserResponse(data: UserResponse) {
-  const { jwt, user } = data;
-  storage.setToken(jwt);
-  return user;
+// import storage from '@/utils/storage';
+
+// const [user, setUser] = useState<null | UserInfo>(null);
+
+async function handleUserResponse(data: LoginAPIResponse) {
+  // const { jwt, user } = data.user_info;
+  // storage.setToken(jwt);
+  console.log('handleUserResponse::data', data);
+  return data.user_info;
 }
 
 async function loadUser() {
-  if (storage.getToken()) {
-    const data = await getUser();
-    return data;
-  }
-  return null;
+  const data = await getUser();
+  return data;
+  // return null;
 }
 
 async function loginFn(data: LoginCredentialsDTO) {
-  const response = await loginWithEmailAndPassword(data);
+  console.log('loginFn::data', data);
+  const response = await loginWithUsernameAndPassword(data);
+  console.log('loginFn::response', response);
   const user = await handleUserResponse(response);
+  console.log('loginFn::user', user);
   return user;
 }
 
@@ -39,7 +48,9 @@ async function registerFn(data: RegisterCredentialsDTO) {
 }
 
 async function logoutFn() {
-  storage.clearToken();
+  // storage.clearToken();
+  const response = await logout();
+  console.log(response);
   window.location.assign(window.location.origin as unknown as string);
 }
 
@@ -58,7 +69,7 @@ const authConfig = {
 };
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<
-  AuthUser | null,
+  UserInfo | null,
   unknown,
   LoginCredentialsDTO,
   RegisterCredentialsDTO

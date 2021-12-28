@@ -6,13 +6,13 @@ import { Form, InputField } from '@/components/Form';
 import { useAuth } from '@/lib/auth';
 
 const schema = z.object({
-  email: z.string().min(1, 'Required'),
-  password: z.string().min(1, 'Required'),
+  u: z.string().min(1, 'Required'),
+  p: z.string().min(1, 'Required'),
 });
 
 type LoginValues = {
-  email: string;
-  password: string;
+  u: string;
+  p: string;
 };
 
 type LoginFormProps = {
@@ -34,16 +34,16 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
         {({ register, formState }) => (
           <>
             <InputField
-              type="email"
-              label="Email Address"
-              error={formState.errors['email']}
-              registration={register('email')}
+              type="text"
+              label="User Name"
+              error={formState.errors['u']}
+              registration={register('u')}
             />
             <InputField
               type="password"
               label="Password"
-              error={formState.errors['password']}
-              registration={register('password')}
+              error={formState.errors['p']}
+              registration={register('p')}
             />
             <div>
               <Button isLoading={isLoggingIn} type="submit" className="w-full">

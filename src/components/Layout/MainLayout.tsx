@@ -1,17 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Icon } from '@chakra-ui/icons';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   UserIcon,
   FolderIcon,
   HomeIcon,
   MenuAlt2Icon,
+  MenuIcon,
   UsersIcon,
   XIcon,
-} from '@heroicons/react/outline';
+  KeyIcon,
+  UserGroupIcon,
+} from '@heroicons/react/solid';
+// import { MenuIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import * as React from 'react';
+// eslint-disable-next-line import/order
+import { Box, Text, Button } from '@chakra-ui/react';
 import { NavLink, Link } from 'react-router-dom';
 
-import logo from '@/assets/logo.svg';
+import logo from '@/assets/vivid_vision_logo.png';
+// eslint-disable-next-line no-restricted-imports
+import { PatientsList } from '@/features/patients/components/PatientsList';
 import { useAuth } from '@/lib/auth';
 import { useAuthorization, ROLES } from '@/lib/authorization';
 
@@ -24,12 +34,12 @@ type SideNavigationItem = {
 const SideNavigation = () => {
   const { checkAccess } = useAuthorization();
   const navigation = [
-    { name: 'Dashboard', to: '.', icon: HomeIcon },
-    { name: 'Discussions', to: './discussions', icon: FolderIcon },
-    checkAccess({ allowedRoles: [ROLES.ADMIN] }) && {
-      name: 'Users',
-      to: './users',
-      icon: UsersIcon,
+    { name: 'Home', to: '.', icon: HomeIcon },
+    { name: 'Patients', to: './patients', icon: UserGroupIcon },
+    checkAccess({ allowedRoles: [ROLES.is_admin, ROLES.is_mod] }) && {
+      name: 'Mod',
+      to: './mod_tools',
+      icon: KeyIcon,
     },
   ].filter(Boolean) as SideNavigationItem[];
 
@@ -41,19 +51,12 @@ const SideNavigation = () => {
           key={item.name}
           to={item.to}
           className={clsx(
-            'text-gray-300 hover:bg-gray-700 hover:text-white',
-            'group flex items-center px-2 py-2 text-base font-medium rounded-md'
+            'text-blue-200 active:text-white hover:bg-blue-600 hover:text-white',
+            'group flex items-center px-3 py-3 text-base font-normal rounded-md'
           )}
-          activeClassName="bg-gray-900 text-white"
+          activeClassName="text-blue-500 bg-white active:text-white hover:text-white hover:bg-blue-400"
         >
-          <item.icon
-            className={clsx(
-              'text-gray-400 group-hover:text-gray-300',
-              'mr-4 flex-shrink-0 h-6 w-6'
-            )}
-            aria-hidden="true"
-          />
-          {item.name}
+          <item.icon className={clsx('', 'flex-shrink-0 h-6 w-6')} aria-hidden="true" />
         </NavLink>
       ))}
     </>
@@ -81,13 +84,13 @@ const UserNavigation = () => {
   ].filter(Boolean) as UserNavigationItem[];
 
   return (
-    <Menu as="div" className="ml-3 relative">
+    <Menu as="div" className="ml-0 relative">
       {({ open }) => (
         <>
           <div>
-            <Menu.Button className="max-w-xs  bg-gray-200 p-2 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <Menu.Button className="px-4 h-16 border-gray-200 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-300">
               <span className="sr-only">Open user menu</span>
-              <UserIcon className="h-8 w-8 rounded-full" />
+              <MenuIcon className="h-6 w-6 m-0"></MenuIcon>
             </Menu.Button>
           </div>
           <Transition
@@ -163,7 +166,10 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) => {
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
         >
-          <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800">
+          <div
+            className="relative flex flex-col w-80 pt-5 pb-4 bg-white"
+            css={{ width: '200px !important' }}
+          >
             <Transition.Child
               as={React.Fragment}
               enter="ease-in-out duration-300"
@@ -183,14 +189,29 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) => {
                 </button>
               </div>
             </Transition.Child>
-            <div className="flex-shrink-0 flex items-center px-4">
+            <div className="flex items-center h-16 flex-shrink-0 px-2 bg-white justify-center">
               <Logo />
             </div>
-            <div className="mt-5 flex-1 h-0 overflow-y-auto">
-              <nav className="px-2 space-y-1">
-                <SideNavigation />
+            <Box
+              className="flex-1 flex flex-col overflow-y-auto p-0 w-full"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '4px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: 'white',
+                  borderRadius: '24px',
+                },
+              }}
+            >
+              <nav className="flex-1 p-2 bg-white space-y-2 w-full">
+                <PatientsList />
+                {/* <SideNavigation /> */}
               </nav>
-            </div>
+            </Box>
           </div>
         </Transition.Child>
         <div className="flex-shrink-0 w-14" aria-hidden="true"></div>
@@ -199,19 +220,51 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) => {
   );
 };
 
-const Sidebar = () => {
+const NavigationBar = () => {
   return (
-    <div className="hidden md:flex md:flex-shrink-0">
-      <div className="flex flex-col w-64">
+    <div className="xs:flex xs:flex-shrink-0 bg-blue-500">
+      <div className="flex flex-col">
         <div className="flex flex-col h-0 flex-1">
-          <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900">
-            <Logo />
-          </div>
-          <div className="flex-1 flex flex-col overflow-y-auto">
+          <Box className="flex-1 flex flex-col overflow-y-none p-0 w-full">
+            <nav className="flex-1 p-2 space-y-2 w-full mt-24">
+              <SideNavigation />
+            </nav>
+          </Box>
+          {/* <div className="flex-1 flex flex-col overflow-y-auto">
             <nav className="flex-1 px-2 py-4 bg-gray-800 space-y-1">
               <SideNavigation />
             </nav>
-          </div>
+          </div> */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Sidebar = () => {
+  return (
+    <div className="hidden md:flex md:flex-shrink-0">
+      <div className="flex flex-col w-80">
+        <div className="flex flex-col h-0 flex-1">
+          <Box
+            className="flex-1 flex flex-col overflow-y-none p-0 w-full"
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'white',
+                borderRadius: '24px',
+              },
+            }}
+          >
+            <nav className="flex-1 p-2 bg-white space-y-2 w-full">
+              <PatientsList />
+            </nav>
+          </Box>
         </div>
       </div>
     </div>
@@ -221,8 +274,8 @@ const Sidebar = () => {
 const Logo = () => {
   return (
     <Link className="flex items-center text-white" to=".">
-      <img className="h-8 w-auto" src={logo} alt="Workflow" />
-      <span className="text-xl text-white font-semibold">Bulletproof React</span>
+      <img className="h-10 w-auto" src={logo} alt="Vivid Vision Web" />
+      {/* <span className="text-xl text-white font-semibold">Bulletproof React</span> */}
     </Link>
   );
 };
@@ -235,25 +288,40 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+    <div className="h-screen flex overflow-hidden bg-gray-200">
       <MobileSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <Sidebar />
+      <NavigationBar />
+      {/* <Sidebar /> */}
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-          <button
-            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <span className="sr-only">Open sidebar</span>
-            <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
-          </button>
-          <div className="flex-1 px-4 flex justify-end">
-            <div className="ml-4 flex items-center md:ml-6">
-              <UserNavigation />
+        <button
+          className="m-2 p-2 bg-white rounded-md text-gray-500 font-medium focus:outline-none md:hidden"
+          onClick={() => setSidebarOpen(true)}
+        >
+          <span className="sr-only">Open sidebar</span>
+          View Patient List
+        </button>
+        <div className="flex-1 px-0 flex justify-center">
+          {/* <Logo /> */}
+          <main className="flex-1 relative overflow-y-auto focus:outline-none">{children}</main>
+          {/* <div className="relative z-10 flex-shrink-0 flex h-16 bg-gray-100">
+            <div className="flex-3 px-0 flex justify-end">
+              <div className="ml-4 flex items-center md:ml-6">
+                <UserNavigation />
+              </div>
             </div>
+          </div> */}
+        </div>
+      </div>
+      <div className="xs:flex xs:flex-shrink-0 bg-blue-500">
+        <div className="flex flex-col">
+          <div className="flex flex-col h-0 flex-1">
+            <Box className="flex-1 flex flex-col overflow-y-none p-0 w-full">
+              <nav className="flex-1 space-y-2 w-full">
+                <UserNavigation />
+              </nav>
+            </Box>
           </div>
         </div>
-        <main className="flex-1 relative overflow-y-auto focus:outline-none">{children}</main>
       </div>
     </div>
   );

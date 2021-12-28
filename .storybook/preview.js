@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppProvider } from '../src/providers/app';
+import { StorybookProvider } from '../src/providers/app';
 import '../src/index.css';
 
 export const parameters = {
@@ -8,8 +8,8 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <AppProvider>
+    <StorybookProvider>
       <Story />
-    </AppProvider>
+    </StorybookProvider>
   ),
 ];

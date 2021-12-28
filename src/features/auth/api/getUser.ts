@@ -1,7 +1,7 @@
 import { axios } from '@/lib/axios';
 
-import { AuthUser } from '../types';
+import { UserInfo } from '../types';
 
-export const getUser = (): Promise<AuthUser> => {
-  return axios.get('/auth/me');
+export const getUser = (): Promise<UserInfo> => {
+  return axios.get('/vue_api/is_logged_in');
 };

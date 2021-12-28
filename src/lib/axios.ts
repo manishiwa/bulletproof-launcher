@@ -15,6 +15,7 @@ function authRequestInterceptor(config: AxiosRequestConfig) {
 
 export const axios = Axios.create({
   baseURL: API_URL,
+  withCredentials: true,
 });
 
 axios.interceptors.request.use(authRequestInterceptor);

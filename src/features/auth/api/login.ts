@@ -1,12 +1,26 @@
+// import { AxiosResponse } from 'axios';
+
+import md5 from 'md5';
+
 import { axios } from '@/lib/axios';
 
-import { UserResponse } from '../types';
+import { LoginAPIResponse } from '../types';
 
 export type LoginCredentialsDTO = {
-  email: string;
-  password: string;
+  u: string;
+  p: string;
 };
 
-export const loginWithEmailAndPassword = (data: LoginCredentialsDTO): Promise<UserResponse> => {
-  return axios.post('/auth/login', data);
+export const loginWithUsernameAndPassword = (
+  data: LoginCredentialsDTO
+): Promise<LoginAPIResponse> => {
+  return axios
+    .post<LoginAPIResponse>('/vue_api/log_in', {
+      u: data.u,
+      p: md5(data.p),
+    })
+    .then((resp: any) => {
+      console.log('loginWithUsernameAndPassword::resp', resp);
+      return resp;
+    });
 };

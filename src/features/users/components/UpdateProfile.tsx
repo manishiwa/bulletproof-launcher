@@ -3,16 +3,13 @@ import * as z from 'zod';
 
 import { Button } from '@/components/Elements';
 import { Form, FormDrawer, InputField } from '@/components/Form';
-import { TextAreaField } from '@/components/Form/TextareaField';
+// import { TextAreaField } from '@/components/Form/TextareaField';
 import { useAuth } from '@/lib/auth';
 
 import { UpdateProfileDTO, useUpdateProfile } from '../api/updateProfile';
 
 const schema = z.object({
-  email: z.string().min(1, 'Required'),
-  firstName: z.string().min(1, 'Required'),
-  lastName: z.string().min(1, 'Required'),
-  bio: z.string(),
+  user_name: z.string().min(1, 'Required'),
 });
 
 export const UpdateProfile = () => {
@@ -46,10 +43,7 @@ export const UpdateProfile = () => {
         }}
         options={{
           defaultValues: {
-            firstName: user?.firstName,
-            lastName: user?.lastName,
-            email: user?.email,
-            bio: user?.bio,
+            user_name: user?.user_name,
           },
         }}
         schema={schema}
@@ -57,26 +51,9 @@ export const UpdateProfile = () => {
         {({ register, formState }) => (
           <>
             <InputField
-              label="First Name"
-              error={formState.errors['firstName']}
-              registration={register('firstName')}
-            />
-            <InputField
-              label="Last Name"
-              error={formState.errors['lastName']}
-              registration={register('lastName')}
-            />
-            <InputField
-              label="Email Address"
-              type="email"
-              error={formState.errors['email']}
-              registration={register('email')}
-            />
-
-            <TextAreaField
-              label="Bio"
-              error={formState.errors['bio']}
-              registration={register('bio')}
+              label="User Name"
+              error={formState.errors['user_name']}
+              registration={register('user_name')}
             />
           </>
         )}

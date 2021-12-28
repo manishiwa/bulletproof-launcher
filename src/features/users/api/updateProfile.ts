@@ -7,10 +7,7 @@ import { useNotificationStore } from '@/stores/notifications';
 
 export type UpdateProfileDTO = {
   data: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    bio: string;
+    user_name: string;
   };
 };
 

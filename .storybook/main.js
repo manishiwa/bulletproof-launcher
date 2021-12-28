@@ -22,6 +22,11 @@ module.exports = {
       ],
       include: path.resolve(__dirname, '../'),
     });
+    config.module.rules.push({
+      type: 'javascript/auto',
+      test: /\.mjs$/,
+      include: /node_modules/,
+    });
     config.resolve.plugins = config.resolve.plugins || [];
     config.resolve.plugins.push(
       new TsconfigPathsPlugin({

@@ -13,7 +13,7 @@ export const DeleteDiscussion = ({ id }: DeleteDiscussionProps) => {
   const deleteDiscussionMutation = useDeleteDiscussion();
 
   return (
-    <Authorization allowedRoles={[ROLES.ADMIN]}>
+    <Authorization allowedRoles={[ROLES.is_admin, ROLES.is_mod]}>
       <ConfirmationDialog
         icon="danger"
         title="Delete Discussion"

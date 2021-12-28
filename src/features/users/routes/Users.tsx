@@ -9,7 +9,7 @@ export const Users = () => {
       <div className="mt-4">
         <Authorization
           forbiddenFallback={<div>Only admin can view this.</div>}
-          allowedRoles={[ROLES.ADMIN]}
+          allowedRoles={[ROLES.is_admin, ROLES.is_mod]}
         >
           <UsersList />
         </Authorization>

@@ -1,24 +1,26 @@
 import * as React from 'react';
 
-import { Comment } from '@/features/comments';
-import { User } from '@/features/users';
+import { UserInfo } from '@/features/auth';
+// import { Comment } from '@/features/comments';
+// import { User } from '@/features/users';
 
 import { useAuth } from './auth';
 
 export enum ROLES {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
+  is_admin = 'is_admin',
+  is_mod = 'is_mod',
+  is_patient = 'is_patient',
 }
 
 type RoleTypes = keyof typeof ROLES;
 
 export const POLICIES = {
-  'comment:delete': (user: User, comment: Comment) => {
-    if (user.role === 'ADMIN') {
+  'comment:delete': (user: UserInfo) => {
+    if (user.is_admin === '1') {
       return true;
     }
 
-    if (user.role === 'USER' && comment.authorId === user.id) {
+    if (user.is_mod === '1') {
       return true;
     }
 
@@ -36,15 +38,19 @@ export const useAuthorization = () => {
   const checkAccess = React.useCallback(
     ({ allowedRoles }: { allowedRoles: RoleTypes[] }) => {
       if (allowedRoles && allowedRoles.length > 0) {
-        return allowedRoles?.includes(user.role);
+        let canAccess = false;
+        allowedRoles?.forEach((role: RoleTypes) => {
+          console.log('user[' + role + ']', user[role]);
+          if (user && user[role] === '1') canAccess = true;
+        });
+        return canAccess;
       }
-
       return true;
     },
-    [user.role]
+    [user]
   );
 
-  return { checkAccess, role: user.role };
+  return { checkAccess, role: user };
 };
 
 type AuthorizationProps = {

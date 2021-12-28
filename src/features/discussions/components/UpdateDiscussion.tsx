@@ -22,7 +22,7 @@ export const UpdateDiscussion = ({ discussionId }: UpdateDiscussionProps) => {
   const updateDiscussionMutation = useUpdateDiscussion();
 
   return (
-    <Authorization allowedRoles={[ROLES.ADMIN]}>
+    <Authorization allowedRoles={[ROLES.is_admin, ROLES.is_mod]}>
       <FormDrawer
         isDone={updateDiscussionMutation.isSuccess}
         triggerButton={

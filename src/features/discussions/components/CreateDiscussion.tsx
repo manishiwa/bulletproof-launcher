@@ -16,7 +16,7 @@ export const CreateDiscussion = () => {
   const createDiscussionMutation = useCreateDiscussion();
 
   return (
-    <Authorization allowedRoles={[ROLES.ADMIN]}>
+    <Authorization allowedRoles={[ROLES.is_admin, ROLES.is_mod]}>
       <FormDrawer
         isDone={createDiscussionMutation.isSuccess}
         triggerButton={
