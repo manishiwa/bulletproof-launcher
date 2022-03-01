@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import logo from '@/assets/logo.svg';
+import logo from '@/assets/vivid_vision_logo.png';
 import { Link } from '@/components/Elements';
 import { Head } from '@/components/Head';
 
@@ -21,7 +21,7 @@ export const Layout = ({ children, title }: LayoutProps) => {
             </Link>
           </div>
 
-          <h2 className="mt-3 text-center text-3xl font-extrabold text-gray-900">{title}</h2>
+          {/* <h2 className="mt-3 text-center text-3xl font-extrabold text-gray-900">{title}</h2> */}
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

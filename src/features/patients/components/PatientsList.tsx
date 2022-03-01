@@ -104,7 +104,7 @@ export const PatientsList = () => {
   };
 
   return (
-    <>
+    <Box w="full" bg="white">
       <InputGroup size="sm">
         <InputLeftElement pointerEvents="none" color="gray.400" fontSize="1.2em">
           <Icon as={UserIcon} w={6} h={6} />
@@ -160,6 +160,6 @@ export const PatientsList = () => {
           </List>
         )}
       </AutoSizer>
-    </>
+    </Box>
   );
 };

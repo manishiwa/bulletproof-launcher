@@ -21,7 +21,7 @@ import { NavLink, Link } from 'react-router-dom';
 
 import logo from '@/assets/vivid_vision_logo.png';
 // eslint-disable-next-line no-restricted-imports
-import { PatientsList } from '@/features/patients/components/PatientsList';
+import { PatientsList } from '@/features/patients/components/PatientsListBlue';
 import { useAuth } from '@/lib/auth';
 import { useAuthorization, ROLES } from '@/lib/authorization';
 
@@ -51,10 +51,10 @@ const SideNavigation = () => {
           key={item.name}
           to={item.to}
           className={clsx(
-            'text-blue-200 active:text-white hover:bg-blue-600 hover:text-white',
+            'text-blue-200 active:text-white hover:bg-blue-800 hover:text-white',
             'group flex items-center px-3 py-3 text-base font-normal rounded-md'
           )}
-          activeClassName="text-blue-500 bg-white active:text-white hover:text-white hover:bg-blue-400"
+          activeClassName="text-blue-700 bg-white active:text-white hover:text-white hover:bg-blue-700"
         >
           <item.icon className={clsx('', 'flex-shrink-0 h-6 w-6')} aria-hidden="true" />
         </NavLink>
@@ -142,7 +142,7 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) => {
       <Dialog
         as="div"
         static
-        className="fixed inset-0 flex z-40 md:hidden"
+        className="fixed inset-0 flex z-40 lg:hidden "
         open={sidebarOpen}
         onClose={setSidebarOpen}
       >
@@ -167,8 +167,8 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) => {
           leaveTo="-translate-x-full"
         >
           <div
-            className="relative flex flex-col w-80 pt-5 pb-4 bg-white"
-            css={{ width: '200px !important' }}
+            className="relative flex flex-col w-80 bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900"
+            css={{ width: '320px !important' }}
           >
             <Transition.Child
               as={React.Fragment}
@@ -189,25 +189,25 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) => {
                 </button>
               </div>
             </Transition.Child>
-            <div className="flex items-center h-16 flex-shrink-0 px-2 bg-white justify-center">
+            <div className="flex items-center h-16 flex-shrink-0 m-2  justify-center">
               <Logo />
             </div>
             <Box
-              className="flex-1 flex flex-col overflow-y-auto p-0 w-full"
-              css={{
-                '&::-webkit-scrollbar': {
-                  width: '4px',
-                },
-                '&::-webkit-scrollbar-track': {
-                  width: '6px',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  background: 'white',
-                  borderRadius: '24px',
-                },
-              }}
+              className="flex-1 flex flex-col overflow-y-hidden p-0 w-full"
+              // css={{
+              //   '&::-webkit-scrollbar': {
+              //     width: '4px',
+              //   },
+              //   '&::-webkit-scrollbar-track': {
+              //     width: '6px',
+              //   },
+              //   '&::-webkit-scrollbar-thumb': {
+              //     background: 'white',
+              //     borderRadius: '24px',
+              //   },
+              // }}
             >
-              <nav className="flex-1 p-2 bg-white space-y-2 w-full">
+              <nav className="flex-1 bg-white space-y-2 w-full h-full">
                 <PatientsList />
                 {/* <SideNavigation /> */}
               </nav>
@@ -222,7 +222,7 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) => {
 
 const NavigationBar = () => {
   return (
-    <div className="xs:flex xs:flex-shrink-0 bg-blue-500">
+    <Box className="xs:flex xs:flex-shrink-0 bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900 ">
       <div className="flex flex-col">
         <div className="flex flex-col h-0 flex-1">
           <Box className="flex-1 flex flex-col overflow-y-none p-0 w-full">
@@ -237,7 +237,7 @@ const NavigationBar = () => {
           </div> */}
         </div>
       </div>
-    </div>
+    </Box>
   );
 };
 
@@ -294,7 +294,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
       {/* <Sidebar /> */}
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <button
-          className="m-2 p-2 bg-white rounded-md text-gray-500 font-medium focus:outline-none md:hidden"
+          className="mx-4 mt-2 mb-0 p-2 font-medium bg-blue-800 rounded-md text-white font-medium focus:outline-none lg:hidden"
           onClick={() => setSidebarOpen(true)}
         >
           <span className="sr-only">Open sidebar</span>
@@ -312,7 +312,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           </div> */}
         </div>
       </div>
-      <div className="xs:flex xs:flex-shrink-0 bg-blue-500">
+      <div className="xs:flex xs:flex-shrink-0 bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900">
         <div className="flex flex-col">
           <div className="flex flex-col h-0 flex-1">
             <Box className="flex-1 flex flex-col overflow-y-none p-0 w-full">

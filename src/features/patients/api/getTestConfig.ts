@@ -24,11 +24,11 @@ type UseTestConfigOptions = {
   config?: QueryConfig<typeof getTestConfig>;
 };
 
-export const useTestConfig = ({ config, clinic_user_id }: UseTestConfigOptions) => {
+export const useVVPTestConfig = ({ config, clinic_user_id }: UseTestConfigOptions) => {
   return useQuery({
     ...config,
     cacheTime: 0,
-    queryKey: ['testConfig', clinic_user_id],
+    queryKey: ['testConfigs', clinic_user_id],
     queryFn: () => getTestConfig({ clinic_user_id }),
   });
 };

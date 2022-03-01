@@ -1,5 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import { PatientInfo } from '../components/PatientInfo';
+
 // import { Configuration } from './Configuration';
 import { Patient } from './Patient';
 
@@ -8,7 +10,7 @@ import { Patient } from './Patient';
 export const PatientsRoutes = () => {
   return (
     <Routes>
-      <Route path="" element={<Patient />} />
+      <Route path="" element={<PatientInfo />} />
       <Route path=":clinic_user_id/*" element={<Patient />} />
       {/* <Route path=":clinic_user_id/configuration" element={<Configuration />} /> */}
       <Route path="*" element={<Navigate to="." />} />

@@ -1,6 +1,32 @@
 import { extendTheme } from '@chakra-ui/react';
 
 export const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        fontFamily: 'body',
+      },
+    },
+  },
+  fonts: {
+    body: 'Open Sans, sans-serif',
+    heading: 'Open Sans, serif',
+    mono: 'Source Code Pro, monospace',
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        _focus: {
+          boxShadow: 'none',
+        },
+      },
+    },
+    Input: {
+      defaultProps: {
+        focusBorderColor: 'none',
+      },
+    },
+  },
   colors: {
     slate: {
       50: '#f8fafc',

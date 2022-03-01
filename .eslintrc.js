@@ -37,7 +37,7 @@ module.exports = {
       ],
       rules: {
         'no-restricted-imports': [
-          'error',
+          'warn',
           {
             patterns: ['@/features/*/*'],
           },
@@ -61,7 +61,7 @@ module.exports = {
 
         'jsx-a11y/anchor-is-valid': 'off',
 
-        '@typescript-eslint/no-unused-vars': ['error'],
+        '@typescript-eslint/no-unused-vars': ['warn'],
 
         '@typescript-eslint/explicit-function-return-type': ['off'],
         '@typescript-eslint/explicit-module-boundary-types': ['off'],

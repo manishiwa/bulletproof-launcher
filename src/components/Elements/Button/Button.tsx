@@ -1,3 +1,4 @@
+import { Button as ChakraButton } from '@chakra-ui/react';
 import clsx from 'clsx';
 import * as React from 'react';
 
@@ -13,6 +14,7 @@ const sizes = {
   sm: 'py-2 px-4 text-sm',
   md: 'py-2 px-6 text-md',
   lg: 'py-3 px-8 text-lg',
+  xl: 'py-3 px-8 text-lg',
 };
 
 type IconProps =
@@ -24,6 +26,8 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: keyof typeof variants;
   size?: keyof typeof sizes;
   isLoading?: boolean;
+  colorScheme?: string;
+  w?: string;
 } & IconProps;
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -36,26 +40,26 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       startIcon,
       endIcon,
+      colorScheme = 'blue',
+      w = 'full',
       ...props
     },
     ref
   ) => {
     return (
-      <button
+      <ChakraButton
         ref={ref}
         type={type}
-        className={clsx(
-          'flex justify-center items-center border border-gray-300 disabled:opacity-70 disabled:cursor-not-allowed rounded-md shadow-sm font-medium focus:outline-none',
-          variants[variant],
-          sizes[size],
-          className
-        )}
+        colorScheme={colorScheme}
+        w={w}
+        size={size}
+        className={clsx('', variants[variant], className)}
         {...props}
       >
         {isLoading && <Spinner size="sm" className="text-current" />}
         {!isLoading && startIcon}
         <span className="mx-2">{props.children}</span> {!isLoading && endIcon}
-      </button>
+      </ChakraButton>
     );
   }
 );

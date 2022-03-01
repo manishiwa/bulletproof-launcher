@@ -1,5 +1,7 @@
 // import { AxiosResponse } from 'axios';
 
+import { report } from 'process';
+
 import md5 from 'md5';
 
 import { axios } from '@/lib/axios';
@@ -21,6 +23,9 @@ export const loginWithUsernameAndPassword = (
     })
     .then((resp: any) => {
       console.log('loginWithUsernameAndPassword::resp', resp);
+      if (resp.error) {
+        return Promise.reject(resp);
+      }
       return resp;
     });
 };

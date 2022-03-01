@@ -18,6 +18,9 @@ import {
 // import storage from '@/utils/storage';
 
 // const [user, setUser] = useState<null | UserInfo>(null);
+interface Error {
+  error: string;
+}
 
 async function handleUserResponse(data: LoginAPIResponse) {
   // const { jwt, user } = data.user_info;
@@ -70,7 +73,7 @@ const authConfig = {
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<
   UserInfo | null,
-  unknown,
+  Error,
   LoginCredentialsDTO,
   RegisterCredentialsDTO
 >(authConfig);

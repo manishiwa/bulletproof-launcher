@@ -1,80 +1,68 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { CheckIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Stack,
-} from '@chakra-ui/react';
-import { UserIcon } from '@heroicons/react/solid';
-import { filter } from 'lodash';
-import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
-import { FixedSizeList as List } from 'react-window';
+import { Box } from '@chakra-ui/react';
+import clsx from 'clsx';
+import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import { Spinner } from '@/components/Elements';
-import { PatientListCard } from '@/components/Elements/PatientListCard/PatientListCard';
-import { useAuth } from '@/lib/auth';
+// import { ROLES, useAuthorization } from '@/lib/authorization';
 import { usePatientStore } from '@/stores/patients';
 
-import { useGameSettings } from '../api/getGameSettings';
-import { Patient } from '../types';
-// import { Patient } from '../types';
+import { PatientsList } from '../components/PatientsListBlue';
+
+// import { Head } from '../../../components/Head';
+
+type ContentLayoutProps = {
+  children: React.ReactNode;
+  //   title: string;
+};
+
+type SideNavigationItem = {
+  name: string;
+  to: string;
+};
 
 export const PatientInfo = () => {
-  const { clinic_user_id } = useParams();
-  const { selectedPatient, setSelectedPatientId, patients } = usePatientStore();
-
-  const { data, isLoading } = useGameSettings({ clinic_user_id: parseInt(clinic_user_id) });
-
-  const [filterString, setFilterString] = useState<string>('');
-
-  const { user } = useAuth();
-
-  useEffect(() => {}, []);
-
-  if (isLoading) {
-    return (
-      <div className="w-full h-48 flex justify-center items-center">
-        <Spinner size="lg" />
-      </div>
-    );
-  }
-
-  if (!data) return null;
-
-  console.log(data);
+  const { selectedPatient } = usePatientStore();
 
   return (
     <>
-      <Box>{clinic_user_id}</Box>
-      <h1 className="text-xl mt-2">
-        <b>{`${selectedPatient?.user_name}`}</b>
-      </h1>
-      <h4 className="my-3">
-        Your distributor is : <b>{user?.distributor}</b>
-      </h4>
-      <p className="font-medium">In this application you can:</p>
-      {user?.is_clinical && (
-        <ul className="my-4 list-inside list-disc">
-          <li>Create comments in discussions</li>
-          <li>Delete own comments</li>
-        </ul>
-      )}
-      {(user?.is_admin || user?.is_mod) && (
-        <ul className="my-4 list-inside list-disc">
-          <li>Create discussions</li>
-          <li>Edit discussions</li>
-          <li>Delete discussions</li>
-          <li>Comment on discussions</li>
-          <li>Delete all comments</li>
-        </ul>
-      )}
+      <div className="h-screen flex overflow-hidden">
+        <Box className="hidden flex-col w-80 md:flex md:flex-shrink-0 ">
+          <div className="flex flex-col h-0 flex-1">
+            <Box className="flex-1 p-0 space-y-0 w-full">
+              <PatientsList />
+            </Box>
+          </div>
+        </Box>
+        <div className="flex flex-col w-full overflow-auto">
+          {/* <Box background="white" m="4" mb="2" width="auto" rounded="md">
+            <div className="py-3">
+              <div className=" mx-auto px-4 sm:px-3 md:px-4">
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  {selectedPatient?.user_name}
+                </h1>
+              </div>
+            </div>
+          </Box> */}
+          <Box mx="4" my="4" width="auto" rounded="md">
+            <div className="px-2 pt-2">
+              <nav className="p-0 space-x-2 md:flex"></nav>
+            </div>
+          </Box>
+          <Box
+            background="white"
+            m="4"
+            mt="0"
+            width="auto"
+            rounded="md"
+            flex="flex"
+            roundedTopLeft="0"
+          >
+            <div className="py-6">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">Please select a Patient</div>
+            </div>
+          </Box>
+        </div>
+      </div>
     </>
   );
 };

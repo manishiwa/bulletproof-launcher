@@ -10,9 +10,11 @@ import { usePatientStore } from '@/stores/patients';
 // import { Authorization } from '@/lib/authorization';
 
 import { PatientConfiguration } from '../components/PatientConfiguration';
-// import { PatientInfo } from '../components/PatientInfo';
 import { PatientLayout } from '../components/PatientLayout';
-import { PatientsList } from '../components/PatientsList';
+import { PatientMeasurements } from '../components/PatientMeasurements';
+import { PatientNotifications } from '../components/PatientNotifications';
+// import { PatientInfo } from '../components/PatientInfo';
+import { PatientsList } from '../components/PatientsListBlue';
 
 // import { Configuration } from './Configuration';
 // import { PatientsList } from '../components/PatientsList';
@@ -28,9 +30,9 @@ export const Patient = () => {
 
   return (
     <div className="h-screen flex overflow-hidden">
-      <div className="hidden flex-col w-80 md:flex md:flex-shrink-0 ">
+      <div className="hidden flex-col w-80 lg:flex lg:flex-shrink-0 ">
         <div className="flex flex-col h-0 flex-1">
-          <div className="flex-1 p-4 pr-0 space-y-2 w-full">
+          <div className="flex-1 p-0 space-y-0 w-full">
             <PatientsList />
           </div>
         </div>
@@ -40,6 +42,8 @@ export const Patient = () => {
           {/* <PatientsHome /> */}
           <Routes>
             <Route path="configuration" element={<PatientConfiguration />} />
+            <Route path="notifications" element={<PatientNotifications />} />
+            <Route path="measurements" element={<PatientMeasurements />} />
             <Route path="*" element={<Navigate to="configuration" />} />
           </Routes>
         </div>

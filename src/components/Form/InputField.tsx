@@ -1,3 +1,4 @@
+import { Input, FormControl } from '@chakra-ui/react';
 import clsx from 'clsx';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
@@ -5,22 +6,17 @@ import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 
 type InputFieldProps = FieldWrapperPassThroughProps & {
   type?: 'text' | 'email' | 'password';
+  w?: string;
+  size?: string;
   className?: string;
   registration: Partial<UseFormRegisterReturn>;
 };
 
 export const InputField = (props: InputFieldProps) => {
-  const { type = 'text', label, className, registration, error } = props;
+  const { type = 'text', size = 'md', label, className, registration, error, w = 'full' } = props;
   return (
-    <FieldWrapper label={label} error={error}>
-      <input
-        type={type}
-        className={clsx(
-          'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-          className
-        )}
-        {...registration}
-      />
+    <FieldWrapper label={label} error={error} className="w-full mt-2" size={size}>
+      <Input type={type} w={w} size={size} className={clsx('', className)} {...registration} />
     </FieldWrapper>
   );
 };

@@ -1,3 +1,4 @@
+import { FormLabel } from '@chakra-ui/react';
 import clsx from 'clsx';
 import * as React from 'react';
 import { FieldError } from 'react-hook-form';
@@ -6,6 +7,7 @@ type FieldWrapperProps = {
   label?: string;
   className?: string;
   children: React.ReactNode;
+  size?: string;
   error?: FieldError | undefined;
   description?: string;
 };
@@ -13,13 +15,13 @@ type FieldWrapperProps = {
 export type FieldWrapperPassThroughProps = Omit<FieldWrapperProps, 'className' | 'children'>;
 
 export const FieldWrapper = (props: FieldWrapperProps) => {
-  const { label, className, error, children } = props;
+  const { label, className, error, children, size = 'md' } = props;
   return (
     <div>
-      <label className={clsx('block text-sm font-medium text-gray-700', className)}>
+      <FormLabel className={clsx('', className)} size={size}>
         {label}
         <div className="mt-1">{children}</div>
-      </label>
+      </FormLabel>
       {error?.message && (
         <div role="alert" aria-label={error.message} className="text-sm font-semibold text-red-500">
           {error.message}

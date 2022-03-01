@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: true, // or 'media' or 'class'
+  darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
       transparent: 'transparent',
@@ -34,12 +34,20 @@ module.exports = {
       yellow: colors.amber,
       white: colors.white,
     },
-    extend: {
-      fontFamily: {
-        sans: ['Nunito', ...defaultTheme.fontFamily.sans],
-        mono: ['SFMono-Regular', ...defaultTheme.fontFamily.mono],
-      },
+    fontFamily: {
+      sans: ['ui-sans-serif', 'system-ui', ...defaultTheme.fontFamily.sans],
+      serif: ['ui-serif', 'Georgia', ...defaultTheme.fontFamily.serif],
+      mono: ['Source Code Pro', 'monospace', ...defaultTheme.fontFamily.mono],
     },
+    // extend: {
+    //   fontFamily: {
+    //     // sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+    //     // mono: ['SFMono-Regular', ...defaultTheme.fontFamily.mono],
+    //     sans: ['ui-sans-serif', 'system-ui', ...defaultTheme.fontFamily.sans],
+    //     serif: ['ui-serif', 'Georgia', ...defaultTheme.fontFamily.serif],
+    //     mono: ['ui-monospace', 'SFMono-Regular', ...defaultTheme.fontFamily.mono],
+    //   },
+    // },
   },
   variants: {
     extend: {},
